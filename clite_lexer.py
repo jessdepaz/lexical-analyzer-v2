@@ -7,22 +7,33 @@ TOKEN_PATTERNS = [
     (r'\bint\b|\bbool\b|\bfloat\b|\bchar\b', 'TYPE'),
     (r'\btrue\b|\bfalse\b', 'BOOLEAN'),
     (r'\bif\b|\belse\b|\bwhile\b|\bmain\b', 'KEYWORD'),
-    (r'==|!=|<=|>=|<|>', 'REL_OP'),
-    (r'\+|\-|\*|/|%', 'ARITH_OP'),
+    (r'==', 'EQU_OP'),
+    (r'<=|>=|<|>', 'REL_OP'),
+    (r'[+-]', 'ADD_OP'),
+    (r'\*|/|%', 'MUL_OP'),
     (r'&&|\|\|', 'LOGICAL_OP'),
+    (r'!', 'UNARY_OP'),
     (r'\(|\)|\{|\}|\[|\]|;', 'SYMBOL'),
     (r'\d+\.\d+', 'FLOAT'),
     (r'\d+', 'INTEGER'),
     (r'\'[a-zA-Z0-9]\'', 'CHAR'),
     (r'[a-zA-Z_][a-zA-Z0-9_]*', 'IDENTIFIER'),
-    (r'=','ASSIGN_OP'),
+    (r'=', 'ASSIGN_OP')
 ]
 
 def tokenize(code):
     tokens = []
-    for pattern, token_type in TOKEN_PATTERNS:
-        for match in re.finditer(pattern, code):
-            tokens.append((match.group(), token_type))
+    while code:
+        match = None
+        for pattern, token_type in TOKEN_PATTERNS:
+            regex = re.compile(pattern)
+            match = regex.match(code)
+            if match:
+                tokens.append((match.group(), token_type))
+                code = code[match.end():]
+                break
+        if not match:
+            code = code[1:]
     return tokens
 
 def analyze_code():
