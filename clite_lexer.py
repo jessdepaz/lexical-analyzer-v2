@@ -21,6 +21,7 @@ TOKEN_PATTERNS = [
     (r'=', 'ASSIGN_OP')
 ]
 
+
 def tokenize(code):
     tokens = []
     while code:
