@@ -4,19 +4,19 @@ from tkinter import scrolledtext
 
 # Define token patterns
 TOKEN_PATTERNS = [
-    (r'\bint\b|\bbool\b|\bfloat\b|\bchar\b', 'TYPE'),
-    (r'\btrue\b|\bfalse\b', 'BOOLEAN'),
-    (r'\bif\b|\belse\b|\bwhile\b|\bmain\b', 'KEYWORD'),
-    (r'==|!=|<=|>=|<|>', 'REL_OP'),
-    (r'\+|\-|\*|/|%', 'ARITH_OP'),
-    (r'&&|\|\|', 'LOGICAL_OP'),
-    (r'\(|\)|\{|\}|\[|\]|;', 'SYMBOL'),
-    (r'\d+\.\d+', 'FLOAT'),
-    (r'\d+', 'INTEGER'),
-    (r'\'[a-zA-Z0-9]\'', 'CHAR'),
-    (r'[a-zA-Z_][a-zA-Z0-9_]*', 'IDENTIFIER'),
-    (r'=','ASSIGN_OP'),
-]
+     ('KEYWORD', r'\b(int|bool|float|char|if|else|while|return|true|false|main)\b'),
+     ('IDENTIFIER', r'\b[a-zA-Z_][a-zA-Z0-9_]*\b'),
+     ('INTEGER', r'\b\d+\b'),
+     ('FLOAT', r'\b\d+\.\d+\b'),
+     ('CHAR', r"'[^']'"),
+     ('BOOLEAN', r'\b(true|false)\b'),
+     ('OPERATOR', r'==|!=|<=|>=|[+\-*/%<>&|!=]'),
+     ('DELIMITER', r'[;(),{}\[\]]'),
+     ('STRING', r'".*?"'),
+     ('WHITESPACE', r'\s+'),
+     ('COMMENT', r'//.*'),
+     ('UNKNOWN', r'.')
+ ]
 
 def tokenize(code):
     tokens = []
